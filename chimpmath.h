@@ -17,6 +17,13 @@ public:
     ChimpMath(QWidget *parent = nullptr);
     ~ChimpMath();
 
+private slots:
+    void on_calculateButton_clicked();
+
+    void on_lineEdit_returnPressed();
+
+    void on_enterButton_clicked();
+
 private:
     Ui::ChimpMath *ui;
 };

@@ -10,13 +10,16 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    chimpmath.cpp
+    chimpmath.cpp \
+    src/calculator/calculator.cpp
 
 HEADERS += \
-    chimpmath.h
+    chimpmath.h \
+    src/calculator/calculator.h
 
 FORMS += \
-    chimpmath.ui
+    chimpmath.ui \
+    src/calculator/calculator.ui
 
 TRANSLATIONS += \
     ChimpMath_en_AS.ts
