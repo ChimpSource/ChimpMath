@@ -11,15 +11,23 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     chimpmath.cpp \
-    src/calculator/calculator.cpp
+    src/browse/browse.cpp \
+    src/calculator/calculator.cpp \
+    src/new/newwindow.cpp \
+    src/utils/jsonparser.cpp
 
 HEADERS += \
     chimpmath.h \
-    src/calculator/calculator.h
+    src/browse/browse.h \
+    src/calculator/calculator.h \
+    src/new/newwindow.h \
+    src/utils/jsonparser.h
 
 FORMS += \
     chimpmath.ui \
-    src/calculator/calculator.ui
+    src/browse/browse.ui \
+    src/calculator/calculator.ui \
+    src/new/newwindow.ui
 
 TRANSLATIONS += \
     ChimpMath_en_AS.ts

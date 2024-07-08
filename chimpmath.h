@@ -20,9 +20,9 @@ public:
 private slots:
     void on_calculateButton_clicked();
 
-    void on_lineEdit_returnPressed();
+    void on_newButton_clicked();
 
-    void on_enterButton_clicked();
+    void on_browseButton_clicked();
 
 private:
     Ui::ChimpMath *ui;
