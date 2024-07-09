@@ -14,7 +14,7 @@ SOURCES += \
     src/browse/browse.cpp \
     src/calculator/calculator.cpp \
     src/new/newwindow.cpp \
-    src/utils/jsonparser.cpp
+    src/utils/jsonparser.cpp \
 
 HEADERS += \
     chimpmath.h \

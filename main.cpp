@@ -6,6 +6,7 @@
 
 int main(int argc, char *argv[])
 {
+
     QApplication a(argc, argv);
 
     QTranslator translator;
@@ -19,5 +20,6 @@ int main(int argc, char *argv[])
     }
     ChimpMath w;
     w.show();
+
     return a.exec();
 }

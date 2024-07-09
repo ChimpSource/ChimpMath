@@ -1,7 +1,9 @@
 #include "newwindow.h"
 #include "ui_newwindow.h"
 
-#include <fstream>
+#include <QFile>
+#include <QDebug>
+#include <QDir>
 
 newWindow::newWindow(QWidget *parent)
     : QDialog(parent)
@@ -19,37 +21,79 @@ void newWindow::on_pushButton_clicked()
 {
     std::string filename = ui->lineEdit->text().toStdString();
 
-    // Create a new file with the filename
-    std::ofstream file(filename + ".json");
+    QDir dir("data");
+    if (!dir.exists()) {
+        dir.mkpath(".");
+    }
 
-    file << "\"graph\": { \n"
-            "   \"equations: [\n"
-            "       {\n"
-            "           \"equation\": \"x^2\",\n"
-            "           \"color\": \"red\",\n"
-            "           \"lineStyle\": \"solid\",\n"
-            "           \"lineWidth\": 2\n"
-            "       },\n"
-            "       {\n"
-            "           \"equation\": \"x^3\",\n"
-            "           \"color\": \"blue\",\n"
-            "           \"lineStyle\": \"dashed\",\n"
-            "           \"lineWidth\": 2\n"
-            "       }\n"
-            "   ],\n"
-            "   \"xAxis\": {\n"
-            "       \"min\": -10,\n"
-            "       \"max\": 10,\n"
-            "       \"step\": 1\n"
-            "   },\n"
-            "   \"yAxis\": {\n"
-            "       \"min\": -10,\n"
-            "       \"max\": 10,\n"
-            "       \"step\": 1\n"
-            "   }\n"
-            "}\n" << std::endl;
+    // Create a new file with the filename in directory "data" with .json
+    QFile file(QString::fromStdString("data/" + filename + ".json"));
 
-    // Close the file
-    file.close();
+    // Open the file
+    if (file.open(QIODevice::ReadWrite)) {
+        // Write the json to the file
+        QTextStream stream(&file);
+        stream << "{\n\"graph\": { \n"
+                   "   \"equations: [\n"
+                   "       {\n"
+                   "           \"equation\": \"x^2\",\n"
+                   "           \"color\": \"red\",\n"
+                   "           \"lineStyle\": \"solid\",\n"
+                   "           \"lineWidth\": 2\n"
+                   "       },\n"
+                   "       {\n"
+                   "           \"equation\": \"x^3\",\n"
+                   "           \"color\": \"blue\",\n"
+                   "           \"lineStyle\": \"dashed\",\n"
+                   "           \"lineWidth\": 2\n"
+                   "       }\n"
+                   "   ],\n"
+                   "   \"xAxis\": {\n"
+                   "       \"min\": -10,\n"
+                   "       \"max\": 10,\n"
+                   "       \"step\": 1\n"
+                   "   },\n"
+                   "   \"yAxis\": {\n"
+                   "       \"min\": -10,\n"
+                   "       \"max\": 10,\n"
+                   "       \"step\": 1\n"
+                   "   }\n"
+                   "}\n";
+        file.close();
+    } else {
+        qDebug() << "Failed to open file";
+    }
+
+
+
+    // file << "{\n\"graph\": { \n"
+    //         "   \"equations: [\n"
+    //         "       {\n"
+    //         "           \"equation\": \"x^2\",\n"
+    //         "           \"color\": \"red\",\n"
+    //         "           \"lineStyle\": \"solid\",\n"
+    //         "           \"lineWidth\": 2\n"
+    //         "       },\n"
+    //         "       {\n"
+    //         "           \"equation\": \"x^3\",\n"
+    //         "           \"color\": \"blue\",\n"
+    //         "           \"lineStyle\": \"dashed\",\n"
+    //         "           \"lineWidth\": 2\n"
+    //         "       }\n"
+    //         "   ],\n"
+    //         "   \"xAxis\": {\n"
+    //         "       \"min\": -10,\n"
+    //         "       \"max\": 10,\n"
+    //         "       \"step\": 1\n"
+    //         "   },\n"
+    //         "   \"yAxis\": {\n"
+    //         "       \"min\": -10,\n"
+    //         "       \"max\": 10,\n"
+    //         "       \"step\": 1\n"
+    //         "   }\n"
+    //         "}\n" << std::endl;
+
+    // Close the window
+    this->close();
 }
 
