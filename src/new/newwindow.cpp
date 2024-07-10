@@ -33,8 +33,46 @@ void newWindow::on_pushButton_clicked()
     if (file.open(QIODevice::ReadWrite)) {
         // Write the json to the file
         QTextStream stream(&file);
+        /*
+         * {
+                "graph": {
+                    "equations": [
+                        {
+                            "equation": "x^2",
+                            "color": "red",
+                            "lineStyle": "solid",
+                            "lineWidth": 2
+                        },
+                        {
+                            "equation": "x^3",
+                            "color": "blue",
+                            "lineStyle": "dashed",
+                            "lineWidth": 2
+                        },
+                        {
+                            "equation": "x",
+                            "color": "green",
+                            "lineStyle": "dotted",
+                            "lineWidth": 2
+                    ],
+                    "xAxis": {
+                        "min": -10,
+                        "max": 10,
+                        "step": 1
+                    },
+                    "yAxis": {
+                        "min": -10,
+                        "max": 10,
+                        "step": 1
+                    }
+                }
+            }
+
+         *
+         * */
+
         stream << "{\n\"graph\": { \n"
-                   "   \"equations: [\n"
+                   "   \"equations\": [\n"
                    "       {\n"
                    "           \"equation\": \"x^2\",\n"
                    "           \"color\": \"red\",\n"
@@ -45,6 +83,12 @@ void newWindow::on_pushButton_clicked()
                    "           \"equation\": \"x^3\",\n"
                    "           \"color\": \"blue\",\n"
                    "           \"lineStyle\": \"dashed\",\n"
+                   "           \"lineWidth\": 2\n"
+                   "       },\n"
+                   "       {\n"
+                   "           \"equation\": \"x\",\n"
+                   "           \"color\": \"green\",\n"
+                   "           \"lineStyle\": \"dotted\",\n"
                    "           \"lineWidth\": 2\n"
                    "       }\n"
                    "   ],\n"
@@ -58,40 +102,12 @@ void newWindow::on_pushButton_clicked()
                    "       \"max\": 10,\n"
                    "       \"step\": 1\n"
                    "   }\n"
+                   "}\n"
                    "}\n";
         file.close();
     } else {
         qDebug() << "Failed to open file";
     }
-
-
-
-    // file << "{\n\"graph\": { \n"
-    //         "   \"equations: [\n"
-    //         "       {\n"
-    //         "           \"equation\": \"x^2\",\n"
-    //         "           \"color\": \"red\",\n"
-    //         "           \"lineStyle\": \"solid\",\n"
-    //         "           \"lineWidth\": 2\n"
-    //         "       },\n"
-    //         "       {\n"
-    //         "           \"equation\": \"x^3\",\n"
-    //         "           \"color\": \"blue\",\n"
-    //         "           \"lineStyle\": \"dashed\",\n"
-    //         "           \"lineWidth\": 2\n"
-    //         "       }\n"
-    //         "   ],\n"
-    //         "   \"xAxis\": {\n"
-    //         "       \"min\": -10,\n"
-    //         "       \"max\": 10,\n"
-    //         "       \"step\": 1\n"
-    //         "   },\n"
-    //         "   \"yAxis\": {\n"
-    //         "       \"min\": -10,\n"
-    //         "       \"max\": 10,\n"
-    //         "       \"step\": 1\n"
-    //         "   }\n"
-    //         "}\n" << std::endl;
 
     // Close the window
     this->close();

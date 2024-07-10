@@ -29,6 +29,10 @@ std::pair<std::string, JsonValue> RetriveKeyValuePair(
 JsonValue ParseJsonHelper(const std::string& text, text_it& it);
 
 JsonValue ParseJson(const std::string& filepath);
+
+// Save new JsonValue to a file
+void SaveJson(const std::string& filepath, const JsonValue& json);
+
 }
 
 #endif // JSON_PARSER_H

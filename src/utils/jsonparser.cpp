@@ -4,14 +4,17 @@
 #include <cctype> // for isdigit()
 
 #include "jsonparser.h"
-
+#include <QDebug>
+#include <QFile>
 
 using namespace JsonParser;
 
 JsonValue JsonParser::ParseJson(const std::string& filepath) {
     // 1. read the text data from the given file
     std::string text;
-    ReadFile(filepath, text);
+    ReadFile("data/data.json", text);
+
+    qDebug() << QString::fromStdString(text);
 
     // 2. parse the text with the helper function and return
     text_it start = text.begin();
@@ -34,7 +37,7 @@ JsonValue JsonParser::ParsePrimitive(const std::string& text, text_it start, tex
     if (float_point_index >= (end - start)) { // integer
         return {.i = std::stoi(substr)};
     } else { // float(double)
-        return {.d = std::stod(substr) };
+        return {.d = std::stod(substr)};
     }
 }
 
@@ -90,6 +93,8 @@ std::pair<std::string, JsonValue> JsonParser::RetriveKeyValuePair(
 }
 
 JsonValue JsonParser::ParseJsonHelper(const std::string& text, text_it& it) {
+    qDebug() << "Parsing json";
+    qDebug() << *it;
     assert(*it == '{'); // must start with the left curly bracket
     it++;
 
@@ -107,4 +112,30 @@ JsonValue JsonParser::ParseJsonHelper(const std::string& text, text_it& it) {
     it++; // after '}'
 
     return { .json = json_map };
+}
+
+void JsonParser::SaveJson(const std::string& filepath, const JsonValue& json) {
+    std::ofstream file(filepath);
+    assert(file.is_open());
+
+    file << "{\n";
+    for (const auto& [key, value] : *json.json) {
+        file << "    \"" << key << "\": ";
+        if (value.json) {
+            SaveJson(filepath, value);
+        } else {
+            if (value.i) {
+                file << value.i;
+            } else {
+                file << value.d;
+            }
+        }
+        file << ",\n";
+    }
+    file << "}\n";
+
+    file.close();
+
+    // delete the allocated memory
+    delete json.json;
 }

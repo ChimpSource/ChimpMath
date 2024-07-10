@@ -1,0 +1,28 @@
+{
+    "graph": {
+        "equations": [
+            {
+                "equation": "x^2",
+                "color": "red",
+                "lineStyle": "solid",
+                "lineWidth": 2
+            },
+            {
+                "equation": "x^3",
+                "color": "blue",
+                "lineStyle": "dashed",
+                "lineWidth": 2
+            }
+        ],
+        "xAxis": {
+            "min": -10,
+            "max": 10,
+            "step": 1
+        },
+        "yAxis": {
+            "min": -10,
+            "max": 10,
+            "step": 1
+        }
+    }
+}

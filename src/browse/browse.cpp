@@ -1,7 +1,9 @@
 #include "browse.h"
+#include "src/graph/graph.h"
 #include "ui_browse.h"
 
 #include <QDir>
+#include <QFile>
 
 Browse::Browse(QWidget *parent)
     : QDialog(parent)
@@ -33,6 +35,14 @@ void Browse::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
         QString json = stream.readAll();
         file.close();
         qDebug() << json;
+
+        // Open the graph window with the json file as input
+        Graph *graph = new Graph(this, "data/" + filename);
+        graph->setJson(json);
+        graph->show();
+
+        // Close the browse window
+        this->close();
     } else {
         qDebug() << "Failed to open file";
     }
