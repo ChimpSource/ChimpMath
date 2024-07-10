@@ -22,20 +22,35 @@ Graph::Graph(QWidget *parent, QString document)
 
     // Create a chart view
 
-    QChartView *chartView = new QChartView(this);
+    QChartView *chartView = createChartView();
+
+    // Create series
+    QLineSeries *series = createSeries("x^2");
+
+    QChart* chart = createChart(series);
+
+
+    chartView->setChart(chart);
+
     ui->verticalLayout->addWidget(chartView);
+}
+
+Graph::~Graph()
+{
+    delete ui;
+}
+
+QChartView* Graph::createChartView() {
+    QChartView *chartView = new QChartView();
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->setRubberBand(QChartView::RectangleRubberBand);
     chartView->setRubberBand(QChartView::VerticalRubberBand);
     chartView->setRubberBand(QChartView::HorizontalRubberBand);
     chartView->setRubberBand(QChartView::ClickThroughRubberBand);
+    return chartView;
+}
 
-    // Plot basic graph of y = x
-    QLineSeries *series = new QLineSeries();
-    for (int i = 0; i < 100; i++) {
-        series->append(i, i);
-    }
-
+QChart* Graph::createChart(QLineSeries* series) {
     QChart *chart = new QChart();
     chart->addSeries(series);
     chart->createDefaultAxes();
@@ -45,13 +60,15 @@ Graph::Graph(QWidget *parent, QString document)
     chart->setTheme(QChart::ChartThemeDark);
     chart->setAnimationOptions(QChart::AllAnimations);
     chart->setAnimationDuration(1000);
-    chartView->setChart(chart);
-
+    return chart;
 }
 
-Graph::~Graph()
-{
-    delete ui;
+QLineSeries* Graph::createSeries(QString function) {
+    QLineSeries *series = new QLineSeries();
+    for (int i = -10; i <= 10; i++) {
+        series->append(i, i * i);
+    }
+    return series;
 }
 
 void Graph::plotGraph()

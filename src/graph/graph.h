@@ -2,6 +2,9 @@
 #define GRAPH_H
 
 #include <QDialog>
+#include <QChart>
+#include <QLineSeries>
+#include <QChartView>
 
 #include "src/utils/jsonparser.h"
 
@@ -24,13 +27,17 @@ public:
     QStringList functions;
     JsonParser::JsonValue json;
 
-
+    QChartView* createChartView();
+    QChart* createChart(QLineSeries* series);
+    QLineSeries* createSeries(QString function);
+    QLineSeries* createSeriesFromJson(QString functions);
     void plotGraph();
 
     void setJson(QString json);
     void addFunction(QString function);
     void removeFunction(QString function);
     void clearFunctions();
+
     void setXRange(double min, double max);
     void setYRange(double min, double max);
     void setXLabel(QString label);
