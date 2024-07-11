@@ -15,7 +15,7 @@ SOURCES += \
     src/calculator/calculator.cpp \
     src/graph/graph.cpp \
     src/new/newwindow.cpp \
-    src/utils/jsonparser.cpp \
+    src/utils/math/math.cpp
 
 HEADERS += \
     chimpmath.h \
@@ -23,7 +23,7 @@ HEADERS += \
     src/calculator/calculator.h \
     src/graph/graph.h \
     src/new/newwindow.h \
-    src/utils/jsonparser.h
+    src/utils/math/math.h
 
 FORMS += \
     chimpmath.ui \

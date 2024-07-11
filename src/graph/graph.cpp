@@ -7,6 +7,7 @@
 #include <fstream>
 
 #include "src/utils/json.hpp"
+#include "src/utils/math/math.h"
 
 Graph::Graph(QWidget *parent, QString document)
     : QDialog(parent)
@@ -66,6 +67,7 @@ QChart* Graph::createChart(QLineSeries* series) {
 QLineSeries* Graph::createSeries(QString function) {
     QLineSeries *series = new QLineSeries();
     for (int i = -10; i <= 10; i++) {
+        int y = Math::evaluateFunction(function.toStdString(), i);
         series->append(i, i * i);
     }
     return series;
@@ -80,10 +82,10 @@ void Graph::setJson(QString text)
 {
     // Parse the json and plot the graph
     std::ifstream f("data/data.json");
-    nlohmann::json data = nlohmann::json::parse(f);
+    this->json = nlohmann::json::parse(f);
 
     // Set functions
-    for (auto &function : data["graph"]["equations"]) {
+    for (auto &function : this->json["graph"]["equations"]) {
         qDebug() << QString::fromStdString(function["equation"]);
         addFunction(QString::fromStdString(function["equation"]));
     }

@@ -6,7 +6,7 @@
 #include <QLineSeries>
 #include <QChartView>
 
-#include "src/utils/jsonparser.h"
+#include "src/utils/json.hpp"
 
 namespace Ui {
 class Graph;
@@ -25,7 +25,7 @@ public:
     double yMin;
     double yMax;
     QStringList functions;
-    JsonParser::JsonValue json;
+    nlohmann::json json;
 
     QChartView* createChartView();
     QChart* createChart(QLineSeries* series);
@@ -37,6 +37,7 @@ public:
     void addFunction(QString function);
     void removeFunction(QString function);
     void clearFunctions();
+
 
     void setXRange(double min, double max);
     void setYRange(double min, double max);
