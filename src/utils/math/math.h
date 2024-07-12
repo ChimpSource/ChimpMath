@@ -2,6 +2,7 @@
 #define MATH_H
 
 #include <string>
+#include <vector>
 
 class Math
 {
@@ -9,7 +10,7 @@ public:
     Math();
 
     static double factorial(double n);
-    static double pow(double base, double exponent);
+    static double pow(double base, double exponent); // base^exponent
     static double sqrt(double n);
     static double cbrt(double n);
     static double root(double base, double n);
@@ -63,7 +64,10 @@ public:
     static double evaluateFunction(std::string function, double x);
 
 private:
-
+    static int getPrecedence(std::string operation);
+    static bool isLetterOrDigit(std::string c);
+    static bool hasLeftAssociativity(std::string c);
+    static int applyOperations(std::vector<std::string> PostFix);
 };
 
 #endif // MATH_H

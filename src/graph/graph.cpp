@@ -26,7 +26,7 @@ Graph::Graph(QWidget *parent, QString document)
     QChartView *chartView = createChartView();
 
     // Create series
-    QLineSeries *series = createSeries("x^2");
+    QLineSeries *series = createSeries("(2x+3)/2");
 
     QChart* chart = createChart(series);
 
@@ -66,10 +66,11 @@ QChart* Graph::createChart(QLineSeries* series) {
 
 QLineSeries* Graph::createSeries(QString function) {
     QLineSeries *series = new QLineSeries();
-    for (int i = -10; i <= 10; i++) {
+    for (int i = 0; i <= 100; i++) {
         int y = Math::evaluateFunction(function.toStdString(), i);
-        series->append(i, i * i);
+        series->append(i, y);
     }
+    // series->append(2, Math::evaluateFunction(function.toStdString(), 10));
     return series;
 }
 
