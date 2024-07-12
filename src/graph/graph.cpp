@@ -26,7 +26,7 @@ Graph::Graph(QWidget *parent, QString document)
     QChartView *chartView = createChartView();
 
     // Create series
-    QLineSeries *series = createSeries("(2x+3)/2");
+    QLineSeries *series = createSeries(json["graph"]["equations"][0]);
 
     QChart* chart = createChart(series);
 
@@ -64,10 +64,10 @@ QChart* Graph::createChart(QLineSeries* series) {
     return chart;
 }
 
-QLineSeries* Graph::createSeries(QString function) {
+QLineSeries* Graph::createSeries(nlohmann::json function) {
     QLineSeries *series = new QLineSeries();
     for (int i = 0; i <= 100; i++) {
-        int y = Math::evaluateFunction(function.toStdString(), i);
+        int y = Math::evaluateFunction(function, i);
         series->append(i, y);
     }
     // series->append(2, Math::evaluateFunction(function.toStdString(), 10));
@@ -86,15 +86,53 @@ void Graph::setJson(QString text)
     this->json = nlohmann::json::parse(f);
 
     // Set functions
-    for (auto &function : this->json["graph"]["equations"]) {
-        qDebug() << QString::fromStdString(function["equation"]);
-        addFunction(QString::fromStdString(function["equation"]));
-    }
+    this->functions = this->json["graph"]["equations"];
 }
 
-void Graph::addFunction(QString function)
+void Graph::addFunction(QString input)
 {
-    functions.append(function);
+    std::vector<std::string> function;
+    // Place spaces into input string to separate numbers and operators but maintain the numbers
+    // such as numbers with more than one digit or numbers with decimal points and negative numbers
+    // are treated as a single number and not separated into individual digits
+    for (int i = 0; i < input.size(); i++) {
+        if (input[i] == '+' || input[i] == '-' || input[i] == '*' || input[i] == '/' || input[i] == '^' || input[i] == '(' || input[i] == ')') {
+            input.insert(i, " ");
+            input.insert(i+2, " ");
+            i += 2;
+        }
+    }
+
+    // Split the string into tokens using spaces as delimiters
+    // This will allow us to parse the string into numbers and operators
+    std::string token;
+    std::stringstream ss(input.toStdString());
+
+    while (getline(ss, token, ' ')) {
+        if (token[0] != ' ' && token[0] != '\0')
+            function.push_back(token);
+    }
+
+    // Add function to json and save
+    std::ifstream f("data/data.json");
+    nlohmann::json json = nlohmann::json::parse(f);
+
+    json["graph"]["equations"].push_back({
+        {"equation", function},
+        {"color", "#000000"},
+        {"lineStyle", "solid"},
+        {"lineWidth", 2}
+    });
+
+    std::ofstream o("data/data.json");
+    o << json.dump(4);
+    o.close();
 }
 
+
+
+void Graph::on_pushButton_clicked()
+{
+    addFunction(ui->lineEdit->text());
+}
 

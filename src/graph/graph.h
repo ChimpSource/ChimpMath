@@ -24,12 +24,12 @@ public:
     double xMax;
     double yMin;
     double yMax;
-    QStringList functions;
+    nlohmann::json functions;
     nlohmann::json json;
 
     QChartView* createChartView();
     QChart* createChart(QLineSeries* series);
-    QLineSeries* createSeries(QString function);
+    QLineSeries* createSeries(nlohmann::json function);
     QLineSeries* createSeriesFromJson(QString functions);
     void plotGraph();
 
@@ -50,6 +50,9 @@ public:
     void setAnimationEasingCurve(int curve);
 
     void openFunctionDialog();
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::Graph *ui;
 };

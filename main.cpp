@@ -1,4 +1,5 @@
 #include "chimpmath.h"
+#include "tests/unittests.h"
 
 #include <QApplication>
 #include <QLocale>
@@ -20,6 +21,9 @@ int main(int argc, char *argv[])
     }
     ChimpMath w;
     w.show();
+
+    // UnitTests test;
+    // test.test_math();
 
     return a.exec();
 }

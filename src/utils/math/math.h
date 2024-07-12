@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include "src/utils/json.hpp"
+
 class Math
 {
 public:
@@ -60,7 +62,7 @@ public:
 
     static double evaluateFunctionToDouble(std::string function);
     static std::string evaluateFunctionToString(std::string function);
-    static int evaluateFunction(std::string function, int x);
+    static int evaluateFunction(nlohmann::json function, int x);
     static double evaluateFunction(std::string function, double x);
 
 private:

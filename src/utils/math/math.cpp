@@ -5,7 +5,21 @@
 #include <stack>
 #include <bits/stdc++.h>
 
+#include "src/utils/json.hpp"
+
 Math::Math() {}
+
+double Math::factorial(double n) {
+    if (n == 0) {
+        return 0;
+    }
+
+    double ans = 1;
+    for (int i = 1; i <= n; i++) {
+        ans *= i;
+    }
+    return ans;
+}
 
 double Math::pow(double a, double b) {
     if (b == 0) {
@@ -59,20 +73,30 @@ bool Math::hasLeftAssociativity(std::string c) {
     }
 }
 
-int Math::evaluateFunction(std::string input, int x) {
+int Math::evaluateFunction(nlohmann::json input, int x) {
     // Create an initially empty string
     std::vector<std::string> output;
-    std::vector<std::string> function;
+    std::vector<std::string> function = input["equation"];
 
     // Replace all occurrences of 'x' with the value of x
     // But if 'x' is following a number, we will multiply them
-    for (int i = 0; i < input.size(); i++) {
-        if (input[i] == 'x') {
-            if (i > 0 && isdigit(input[i-1])) {
-                input[i] = '*';
-                input.insert(i+1, std::to_string(x));
+    // for (int i = 0; i < input.size(); i++) {
+    //     if (input[i] == 'x') {
+    //         if (i > 0 && isdigit(input[i-1])) {
+    //             input[i] = '*';
+    //             input.insert(i+1, std::to_string(x));
+    //         } else {
+    //             input.replace(i, 1, std::to_string(x));
+    //         }
+    //     }
+    // }
+    for (int i = 0; i < function.size(); i++) {
+        if (function[i] == "x") {
+            if (i > 0 && isLetterOrDigit(function[i-1])) {
+                function[i] = "*";
+                function.insert(function.begin()+i+1, std::to_string(x));
             } else {
-                input.replace(i, 1, std::to_string(x));
+                function[i] = std::to_string(x);
             }
         }
     }
@@ -80,25 +104,23 @@ int Math::evaluateFunction(std::string input, int x) {
     // Place spaces into input string to separate numbers and operators but maintain the numbers
     // such as numbers with more than one digit or numbers with decimal points and negative numbers
     // are treated as a single number and not separated into individual digits
-    for (int i = 0; i < input.size(); i++) {
-        if (input[i] == '+' || input[i] == '-' || input[i] == '*' || input[i] == '/' || input[i] == '^' || input[i] == '(' || input[i] == ')') {
-            input.insert(i, " ");
-            input.insert(i+2, " ");
-            i += 2;
-        }
-    }
+    // for (int i = 0; i < input.size(); i++) {
+    //     if (input[i] == '+' || input[i] == '-' || input[i] == '*' || input[i] == '/' || input[i] == '^' || input[i] == '(' || input[i] == ')') {
+    //         input.insert(i, " ");
+    //         input.insert(i+2, " ");
+    //         i += 2;
+    //     }
+    // }
 
     // Split the string into tokens using spaces as delimiters
     // This will allow us to parse the string into numbers and operators
-    std::string token;
-    std::stringstream ss(input);
+    // std::string token;
+    // std::stringstream ss(input);
 
-    while (getline(ss, token, ' ')) {
-        if (token[0] != ' ' && token[0] != '\0')
-            function.push_back(token);
-    }
-
-    qDebug() << function;
+    // while (getline(ss, token, ' ')) {
+    //     if (token[0] != ' ' && token[0] != '\0')
+    //         function.push_back(token);
+    // }
 
     // We will use a variable to store the result
     std::stack<std::string> stack;
@@ -124,7 +146,6 @@ int Math::evaluateFunction(std::string input, int x) {
 
         else {
             while (!stack.empty() && getPrecedence(c) <= getPrecedence(stack.top()) && hasLeftAssociativity(c)) {
-                qDebug() << "here";
                 output.push_back(stack.top());
                 stack.pop();
             }
@@ -141,11 +162,9 @@ int Math::evaluateFunction(std::string input, int x) {
         stack.pop();
     }
 
-    qDebug() << output;
+    int ans = applyOperations(output);
 
-    qDebug() << applyOperations(output);
-
-    return applyOperations(output);
+    return ans;
 }
 
 int Math::applyOperations(std::vector<std::string> PE) {
