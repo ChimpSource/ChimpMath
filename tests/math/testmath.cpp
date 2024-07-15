@@ -20,8 +20,10 @@ std::vector<int> TestMath::test_all() {
     test_addition() ? passed++ : 0;
     test_subtraction() ? passed++ : 0;
     test_evaluateFunction() ? passed++ : 0;
+    test_powersAndRoots() ? passed++ : 0;
+    test_trig() ? passed++ : 0;
 
-    return {passed, 3};
+    return {passed, 5};
 }
 
 void TestMath::initTestCase() {
@@ -72,4 +74,45 @@ bool TestMath::test_evaluateFunction() {
 
 
     return passed == 9;
+}
+
+bool TestMath::test_powersAndRoots() {
+    std::cout << "Testing powersAndRoots" << std::endl;
+    int passed = 0;
+    // Test the powers and roots functions
+
+    // Test the factorial function
+    if (Test::compare(Math::factorial(5), 120)) {
+        passed++;
+    }
+
+    // Test the pow function
+    if (Test::compare(Math::pow(2, 3), 8)) {
+        passed++;
+    }
+
+    // Test the sqrt function
+    if (Test::compare(Math::sqrt(4), 2)) {
+        passed++;
+    }
+
+    // Test the cbrt function
+    if (Test::compare(Math::cbrt(8), 2)) {
+        passed++;
+    }
+
+    // Test the root function
+    if (Test::compare(Math::root(8, 3), 2)) {
+        passed++;
+    }
+
+    return passed == 5;
+}
+
+bool TestMath::test_trig() {
+    std::cout << "Testing trig" << std::endl;
+    int passed = 0;
+    // Test the trig functions
+
+    return passed == 1;
 }

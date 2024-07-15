@@ -2,6 +2,8 @@
 #include "qdebug.h"
 #include "qlogging.h"
 
+#include <math.h>
+
 #include <stack>
 #include <bits/stdc++.h>
 
@@ -43,6 +45,93 @@ double Math::pow(double a, double b) {
         result *= a;
     }
     return result;
+}
+
+double Math::sqrt(double n) {
+    double ans = 0;
+    double low = 0;
+    double high = n;
+    double mid = 0;
+    double epsilon = 0.00001;
+
+    while (high - low > epsilon) {
+        mid = (low + high) / 2;
+        if (mid * mid < n) {
+            low = mid;
+        } else {
+            high = mid;
+        }
+    }
+
+    ans = (
+        (low + high) / 2
+    );
+
+    return ans;
+}
+
+double Math::cbrt(double n) {
+    double ans = 0;
+
+    if (n < 0) {
+        ans = -cbrt(-n);
+    } else {
+        double low = 0;
+        double high = n;
+        double mid = 0;
+        double epsilon = 0.00001;
+
+        while (high - low > epsilon) {
+            mid = (low + high) / 2;
+            if (mid * mid * mid < n) {
+                low = mid;
+            } else {
+                high = mid;
+            }
+        }
+
+        ans = (
+            (low + high) / 2
+        );
+    }
+
+    return ans;
+}
+
+double Math::root(double base, double n) {
+    double ans = 0;
+
+    if (n == 0) {
+        return 1;
+    }
+
+    if (n == 1) {
+        return base;
+    }
+
+    if (n < 0) {
+        return 1 / root(base, -n);
+    }
+
+    double low = 0;
+    double high = base;
+    double mid = 0;
+    double epsilon = 0.00001;
+
+    while (high - low > epsilon) {
+        mid = (low + high) / 2;
+        if (pow(mid, n) < base) {
+            low = mid;
+        } else {
+            high = mid;
+        }
+    }
+
+    ans = (
+        (low + high) / 2
+    );
+
+    return ans;
 }
 
 bool Math::isLetterOrDigit(std::string c) {

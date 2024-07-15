@@ -19,7 +19,7 @@ public:
     static double log(double base, double n);
     static double ln(double n);
 
-    static double sin(double n);
+    static double sinD(double degree);
     static double cos(double n);
     static double tan(double n);
     static double asin(double n);
@@ -58,7 +58,7 @@ public:
     static double log1p(double n);
     static double log2(double n);
 
-    double PI = 3.14159265358979323846;
+    static double PI() { return 3.14159265358979323846; };
 
     static double evaluateFunctionToDouble(std::string function);
     static std::string evaluateFunctionToString(std::string function);

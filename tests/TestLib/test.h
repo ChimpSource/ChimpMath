@@ -7,7 +7,7 @@ public:
     Test();
     ~Test();
 
-    static bool compare(int a, int b);
+    static bool compare(double a, double b);
 };
 
 #endif // TEST_H

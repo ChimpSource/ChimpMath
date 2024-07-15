@@ -15,7 +15,7 @@ Test::~Test() {
     std::cout << "Passed " << passed << " tests" << std::endl;
 }
 
-bool Test::compare(int a, int b) {
+bool Test::compare(double a, double b) {
     std::cout << "Comparing " << a << " and " << b << std::endl;
     bool result = a == b;
     std::cout << (result ? "\x1B[32m" : "\x1B[31m") << "Test " << (result ? "passed\033[0m\t\t" : "failed\033[0m\t\t") << std::endl;

@@ -14,6 +14,8 @@ public:
     bool test_addition();
     bool test_subtraction();
     bool test_evaluateFunction();
+    bool test_powersAndRoots();
+    bool test_trig();
 };
 
 #endif // TESTMATH_H

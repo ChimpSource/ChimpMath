@@ -15,6 +15,7 @@ SOURCES += \
     src/calculator/calculator.cpp \
     src/graph/graph.cpp \
     src/new/newwindow.cpp \
+    src/settings/settings.cpp \
     src/utils/math/math.cpp \
     tests/TestLib/test.cpp \
     tests/math/testmath.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     src/calculator/calculator.h \
     src/graph/graph.h \
     src/new/newwindow.h \
+    src/settings/settings.h \
     src/utils/math/math.h \
     tests/TestLib/test.h \
     tests/math/testmath.h \
@@ -36,7 +38,8 @@ FORMS += \
     src/browse/browse.ui \
     src/calculator/calculator.ui \
     src/graph/graph.ui \
-    src/new/newwindow.ui
+    src/new/newwindow.ui \
+    src/settings/settings.ui
 
 TRANSLATIONS += \
     ChimpMath_en_AS.ts
