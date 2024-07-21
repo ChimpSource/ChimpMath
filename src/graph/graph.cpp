@@ -7,7 +7,7 @@
 #include <fstream>
 
 #include "src/utils/json.hpp"
-#include "src/utils/math/math.h"
+#include "src/utils/math/mathlib.h"
 
 Graph::Graph(QWidget *parent, QString document)
     : QDialog(parent)
@@ -67,7 +67,7 @@ QChart* Graph::createChart(QLineSeries* series) {
 QLineSeries* Graph::createSeries(nlohmann::json function) {
     QLineSeries *series = new QLineSeries();
     for (int i = 0; i <= 100; i++) {
-        int y = Math::evaluateFunction(function, i);
+        int y = MathLib::evaluateFunction(function, i);
         series->append(i, y);
     }
     // series->append(2, Math::evaluateFunction(function.toStdString(), 10));

@@ -1,29 +1,15 @@
 #include "testmath.h"
-#include "tests/TestLib/test.h"
 #include <iostream>
 #include <fstream>
 
-#include "src/utils/math/math.h"
+#include "src/utils/math/mathlib.h"
+#include "tests/TestLib/Testmacros.h"
 
 TestMath::TestMath() {
     std::cout << "TestMath constructor" << std::endl;
 
     // Initialize variables here
 
-}
-
-std::vector<int> TestMath::test_all() {
-    std::cout << "Running all math tests" << std::endl;
-
-    int passed = 0;
-    // For all tests in this class, call the test function
-    test_addition() ? passed++ : 0;
-    test_subtraction() ? passed++ : 0;
-    test_evaluateFunction() ? passed++ : 0;
-    test_powersAndRoots() ? passed++ : 0;
-    test_trig() ? passed++ : 0;
-
-    return {passed, 5};
 }
 
 void TestMath::initTestCase() {
@@ -34,21 +20,13 @@ void TestMath::cleanupTestCase() {
 
 }
 
-bool TestMath::test_addition() {
-    std::cout << "Testing addition" << std::endl;
-    int a = 1;
-    int b = 2;
-    return Test::compare(a+b, 3);
+void TestMath::test_all() {
+    TestMath::test_evaluateFunction();
+    TestMath::test_powersAndRoots();
+    TestMath::test_trig();
 }
 
-bool TestMath::test_subtraction() {
-    std::cout << "Testing subtraction" << std::endl;
-    return Test::compare(3-2, 1);
-}
-
-bool TestMath::test_evaluateFunction() {
-    std::cout << "Testing evaluateFunction" << std::endl;
-    int passed = 0;
+void TestMath::test_evaluateFunction() {
     // Test the evaluateFunction function
     nlohmann::json json;
     std::ifstream f("data/data.json");
@@ -61,58 +39,32 @@ bool TestMath::test_evaluateFunction() {
         for (int j = 0; j < points.size(); j++) {
             int point = points[i][j];
             int expect = expected[i][j];
-            int result = Math::evaluateFunction(json["graph"]["equations"][i], point);
 
-            if (result == expect) {
-                passed++;
-            } else {
-                std::cout << "Test failed" << std::endl;
-            }
+            TEST_COMPARE(MathLib::evaluateFunction(json["graph"]["equations"][i], point), expect);
         }
 
     }
-
-
-    return passed == 9;
 }
 
-bool TestMath::test_powersAndRoots() {
-    std::cout << "Testing powersAndRoots" << std::endl;
-    int passed = 0;
+void TestMath::test_powersAndRoots() {
     // Test the powers and roots functions
 
     // Test the factorial function
-    if (Test::compare(Math::factorial(5), 120)) {
-        passed++;
-    }
+    TEST_COMPARE(MathLib::factorial(5), 120);
 
     // Test the pow function
-    if (Test::compare(Math::pow(2, 3), 8)) {
-        passed++;
-    }
+    TEST_COMPARE(MathLib::pow(2, 3), 8);
 
     // Test the sqrt function
-    if (Test::compare(Math::sqrt(4), 2)) {
-        passed++;
-    }
+    TEST_COMPARE(MathLib::sqrt(4), 2);
 
     // Test the cbrt function
-    if (Test::compare(Math::cbrt(8), 2)) {
-        passed++;
-    }
+    TEST_COMPARE(MathLib::cbrt(8), 2);
 
     // Test the root function
-    if (Test::compare(Math::root(8, 3), 2)) {
-        passed++;
-    }
-
-    return passed == 5;
+    TEST_COMPARE(MathLib::root(8, 3), 2);
 }
 
-bool TestMath::test_trig() {
-    std::cout << "Testing trig" << std::endl;
-    int passed = 0;
+void TestMath::test_trig() {
     // Test the trig functions
-
-    return passed == 1;
 }

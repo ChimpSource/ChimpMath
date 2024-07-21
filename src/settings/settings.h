@@ -17,6 +17,11 @@ public:
 
 private:
     Ui::Settings *ui;
+
+private slots:
+    void graphSettings();
+    void numberSettings();
+    void otherSettings();
 };
 
 #endif // SETTINGS_H

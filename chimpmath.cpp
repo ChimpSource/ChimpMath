@@ -3,6 +3,7 @@
 #include "src/calculator/calculator.h"
 #include "src/new/newwindow.h"
 #include "src/browse/browse.h"
+#include "src/settings/settings.h"
 
 
 ChimpMath::ChimpMath(QWidget *parent)
@@ -35,5 +36,12 @@ void ChimpMath::on_browseButton_clicked()
 {
     Browse *browse = new Browse(this);
     browse->show();
+}
+
+
+void ChimpMath::on_settingsButton_clicked()
+{
+    Settings *settings = new Settings(this);
+    settings->show();
 }
 

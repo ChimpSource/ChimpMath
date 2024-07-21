@@ -16,7 +16,7 @@ SOURCES += \
     src/graph/graph.cpp \
     src/new/newwindow.cpp \
     src/settings/settings.cpp \
-    src/utils/math/math.cpp \
+    src/utils/math/mathlib.cpp \
     tests/TestLib/test.cpp \
     tests/math/testmath.cpp \
     tests/unittests.cpp
@@ -28,7 +28,8 @@ HEADERS += \
     src/graph/graph.h \
     src/new/newwindow.h \
     src/settings/settings.h \
-    src/utils/math/math.h \
+    src/utils/math/mathlib.h \
+    tests/TestLib/Testmacros.h \
     tests/TestLib/test.h \
     tests/math/testmath.h \
     tests/unittests.h

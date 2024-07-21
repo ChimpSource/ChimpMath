@@ -1,7 +1,6 @@
 #ifndef TESTMATH_H
 #define TESTMATH_H
 
-#include <vector>
 class TestMath
 {
 public:
@@ -9,13 +8,14 @@ public:
 
     void initTestCase();
     void cleanupTestCase();
-    std::vector<int> test_all();
 
-    bool test_addition();
-    bool test_subtraction();
-    bool test_evaluateFunction();
-    bool test_powersAndRoots();
-    bool test_trig();
+    void test_all();
+
+    void test_addition();
+    void test_subtraction();
+    void test_evaluateFunction();
+    void test_powersAndRoots();
+    void test_trig();
 };
 
 #endif // TESTMATH_H

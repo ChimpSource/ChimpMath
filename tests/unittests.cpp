@@ -1,16 +1,19 @@
 #include "unittests.h"
+
+#include "tests/TestLib/testmacros.h"
+
+#include "src/utils/math/mathlib.h"
 #include "tests/math/testmath.h"
-#include <iostream>
 
 UnitTests::UnitTests() {}
 
 void UnitTests::test_main() {}
 
 void UnitTests::test_math() {
-    TestMath testMath;
-    testMath.initTestCase();
-    std::vector<int> passed = testMath.test_all();
-    testMath.cleanupTestCase();
+    TEST_COMPARE(MathLib::factorial(5), 120);
 
-    std::cout << "\x1B[33m" << "Passed " << passed[0] << " out of " << passed[1] << " tests" << "\033[0m\t\t" << std::endl;
+    TestMath testMath;
+    testMath.test_all();
+
+    TEST_PRINT_SUMMARY();
 }

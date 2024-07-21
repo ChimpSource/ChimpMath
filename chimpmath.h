@@ -24,6 +24,8 @@ private slots:
 
     void on_browseButton_clicked();
 
+    void on_settingsButton_clicked();
+
 private:
     Ui::ChimpMath *ui;
 };
