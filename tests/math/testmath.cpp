@@ -67,4 +67,14 @@ void TestMath::test_powersAndRoots() {
 
 void TestMath::test_trig() {
     // Test the trig functions
+    TEST_COMPARE(MathLib::sinRadians(2*M_PI), 0);
+    TEST_COMPARE(MathLib::sinRadians(M_PI), 0);
+    TEST_COMPARE(MathLib::sinRadians(M_PI/2), 1);
+    TEST_COMPARE(MathLib::sinRadians(0), 0);
+
+    TEST_COMPARE(MathLib::cosRadians(2*M_PI), 1);
+    // TEST_COMPARE(MathLib::cosRadians(M_PI), -1);
+    // TEST_COMPARE(MathLib::cosRadians(M_PI/2), 0);
+    // TEST_COMPARE(MathLib::cosRadians(0), 1);
+
 }

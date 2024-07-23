@@ -81,6 +81,32 @@ double MathLib::root(double base, double n) {
     return x;
 }
 
+double MathLib::sinRadians(double x)
+{
+    // if x is in between -pi and pi no need to fmod
+    x = fmodf(x + M_PI, 2.0f * M_PI) - M_PI;
+    double xx = x * x * x; // x^3
+    double t = x - (xx  / 6.0f); // 6 = !3
+    t += (xx *= x * x) / 120.0f; // 120 = !5
+    t -= (xx *= x * x) / 5040.0f; // 5040 = !7
+    t += (xx * x * x)  / 362880.0f; // 362880 = !9
+    return t;
+}
+
+double MathLib::cosRadians(double radians) {
+    radians = fmodf(radians + M_PI, 2.0f * M_PI) - M_PI;
+    double xx = radians * radians; // x^2
+    double t = 1.0f - (xx / 2.0f); // 2 = !2
+    qDebug() << t;
+    t += (xx *= radians * radians) / 24.0f; // 24 = !4
+    qDebug() << t;
+    t -= (xx *= radians * radians) / 720.0f; // 720 = !6
+    qDebug() << t;
+    t += (xx *= radians * radians) / 40320.0f; // 40320 = !8
+    qDebug() << t;
+    return t;
+}
+
 double MathLib::abs(double n) {
     return n < 0 ? -n : n;
 }

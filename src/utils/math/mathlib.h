@@ -19,12 +19,18 @@ public:
     static double log(double base, double n);
     static double ln(double n);
 
-    static double sinD(double degree);
-    static double cos(double n);
-    static double tan(double n);
-    static double asin(double n);
-    static double acos(double n);
-    static double atan(double n);
+    static double sinDegrees(double degrees);
+    static double sinRadians(double radians);
+    static double cosDegrees(double n);
+    static double cosRadians(double n);
+    static double tanDegrees(double n);
+    static double tanRadians(double n);
+    static double asinDegrees(double n);
+    static double asinRadians(double n);
+    static double acosDegrees(double n);
+    static double acosRadians(double n);
+    static double atanDegrees(double n);
+    static double atanRadians(double n);
     static double sinh(double n);
     static double cosh(double n);
     static double tanh(double n);
