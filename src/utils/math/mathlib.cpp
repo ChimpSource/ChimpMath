@@ -94,17 +94,37 @@ double MathLib::sinRadians(double x)
 }
 
 double MathLib::cosRadians(double radians) {
-    radians = fmodf(radians + M_PI, 2.0f * M_PI) - M_PI;
-    double xx = radians * radians; // x^2
-    double t = 1.0f - (xx / 2.0f); // 2 = !2
-    qDebug() << t;
-    t += (xx *= radians * radians) / 24.0f; // 24 = !4
-    qDebug() << t;
-    t -= (xx *= radians * radians) / 720.0f; // 720 = !6
-    qDebug() << t;
-    t += (xx *= radians * radians) / 40320.0f; // 40320 = !8
-    qDebug() << t;
-    return t;
+    // radians = fmodf(radians + M_PI, 2.0f * M_PI) - M_PI;
+    // double xx = radians * radians; // x^2
+    // double t = 1.0f - (xx / 2.0f); // 2 = !2
+    // qDebug() << t;
+    // t += (xx *= radians * radians) / 24.0f; // 24 = !4
+    // qDebug() << t;
+    // t -= (xx *= radians * radians) / 720.0f; // 720 = !6
+    // qDebug() << t;
+    // t += (xx *= radians * radians) / 40320.0f; // 40320 = !8
+    // qDebug() << t;
+    // return t;
+    int div = (int)(radians / M_PI);
+    radians = radians - (div * M_PI);
+    char sign = 1;
+    if (div % 2 != 0)
+        sign = -1;
+
+    double result = 1.0;
+    double inter = 1.0;
+    double num = radians * radians;
+    for (int i = 1; i <= 6; i++)
+    {
+        double comp = 2.0 * i;
+        double den = comp * (comp - 1.0);
+        inter *= num / den;
+        if (i % 2 == 0)
+            result += inter;
+        else
+            result -= inter;
+    }
+    return sign * result;
 }
 
 double MathLib::abs(double n) {
@@ -167,26 +187,7 @@ int MathLib::evaluateFunction(nlohmann::json input, int x) {
         }
     }
 
-    // Place spaces into input string to separate numbers and operators but maintain the numbers
-    // such as numbers with more than one digit or numbers with decimal points and negative numbers
-    // are treated as a single number and not separated into individual digits
-    // for (int i = 0; i < input.size(); i++) {
-    //     if (input[i] == '+' || input[i] == '-' || input[i] == '*' || input[i] == '/' || input[i] == '^' || input[i] == '(' || input[i] == ')') {
-    //         input.insert(i, " ");
-    //         input.insert(i+2, " ");
-    //         i += 2;
-    //     }
-    // }
 
-    // Split the string into tokens using spaces as delimiters
-    // This will allow us to parse the string into numbers and operators
-    // std::string token;
-    // std::stringstream ss(input);
-
-    // while (getline(ss, token, ' ')) {
-    //     if (token[0] != ' ' && token[0] != '\0')
-    //         function.push_back(token);
-    // }
 
     // We will use a variable to store the result
     std::stack<std::string> stack;

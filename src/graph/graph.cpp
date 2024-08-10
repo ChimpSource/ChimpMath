@@ -16,24 +16,18 @@ Graph::Graph(QWidget *parent, QString document)
     qDebug() << "Graph constructor";
     qDebug() << document;
 
+    fileName = document;
+
     ui->setupUi(this);
 
     // Set the json document
     setJson(document);
 
-    // Create a chart view
 
-    QChartView *chartView = createChartView();
 
     // Create series
-    QLineSeries *series = createSeries(json["graph"]["equations"][0]);
+    plotGraph();
 
-    QChart* chart = createChart(series);
-
-
-    chartView->setChart(chart);
-
-    ui->verticalLayout->addWidget(chartView);
 }
 
 Graph::~Graph()
@@ -76,7 +70,33 @@ QLineSeries* Graph::createSeries(nlohmann::json function) {
 
 void Graph::plotGraph()
 {
+    // Delete the current graph and chart view
+    if (ui->verticalLayout->count() > 0) {
+        ui->verticalLayout->removeWidget(ui->verticalLayout->itemAt(0)->widget());
+    }
+
+    // Load the json file
+    setJson(fileName);
+
     // Plot the graph
+    // Create a chart view
+    QChartView *chartView = createChartView();
+
+    QLineSeries *series = createSeries(json["graph"]["equations"][0]);
+
+    QChart* chart = createChart(series);
+    if (json["graph"]["equations"].size() > 1) {
+        for (int i = 1; i < json["graph"]["equations"].size(); i++) {
+            QLineSeries *newSeries = createSeries(json["graph"]["equations"][i]);
+            chart->addSeries(newSeries);
+            chart->createDefaultAxes();
+        }
+    }
+
+
+    chartView->setChart(chart);
+
+    ui->verticalLayout->addWidget(chartView);
 }
 
 void Graph::setJson(QString text)
@@ -134,5 +154,6 @@ void Graph::addFunction(QString input)
 void Graph::on_pushButton_clicked()
 {
     addFunction(ui->lineEdit->text());
+    plotGraph();
 }
 

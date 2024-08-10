@@ -24,6 +24,7 @@ public:
     double xMax;
     double yMin;
     double yMax;
+    QString fileName;
     nlohmann::json functions;
     nlohmann::json json;
 

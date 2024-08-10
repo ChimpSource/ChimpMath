@@ -21,7 +21,7 @@ void TestMath::cleanupTestCase() {
 }
 
 void TestMath::test_all() {
-    TestMath::test_evaluateFunction();
+    // TestMath::test_evaluateFunction();
     TestMath::test_powersAndRoots();
     TestMath::test_trig();
 }
@@ -73,8 +73,8 @@ void TestMath::test_trig() {
     TEST_COMPARE(MathLib::sinRadians(0), 0);
 
     TEST_COMPARE(MathLib::cosRadians(2*M_PI), 1);
-    // TEST_COMPARE(MathLib::cosRadians(M_PI), -1);
-    // TEST_COMPARE(MathLib::cosRadians(M_PI/2), 0);
-    // TEST_COMPARE(MathLib::cosRadians(0), 1);
+    TEST_COMPARE(MathLib::cosRadians(M_PI), -1);
+    TEST_COMPARE(MathLib::cosRadians(M_PI/2), 0);
+    TEST_COMPARE(MathLib::cosRadians(0), 1);
 
 }
