@@ -61,7 +61,8 @@ QChart* Graph::createChart(QLineSeries* series) {
 QLineSeries* Graph::createSeries(nlohmann::json function) {
     QLineSeries *series = new QLineSeries();
     for (int i = 0; i <= 100; i++) {
-        int y = MathLib::evaluateFunction(function, i);
+        std::string expr = nlohmann::to_string(function["equation"]);
+        int y = MathLib::compute(expr, i);
         series->append(i, y);
     }
     // series->append(2, Math::evaluateFunction(function.toStdString(), 10));

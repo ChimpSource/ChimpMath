@@ -71,6 +71,9 @@ public:
     static int evaluateFunction(nlohmann::json function, int x);
     static double evaluateFunction(std::string function, double x);
 
+    static int32_t compute(const std::string& expr);
+    static int32_t compute(std::string& expr, int i);
+
 private:
     static int getPrecedence(std::string operation);
     static bool isLetterOrDigit(std::string c);

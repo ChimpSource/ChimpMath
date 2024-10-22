@@ -21,29 +21,31 @@ void TestMath::cleanupTestCase() {
 }
 
 void TestMath::test_all() {
-    // TestMath::test_evaluateFunction();
+    TestMath::test_evaluateFunction();
     TestMath::test_powersAndRoots();
     TestMath::test_trig();
 }
 
 void TestMath::test_evaluateFunction() {
-    // Test the evaluateFunction function
-    nlohmann::json json;
-    std::ifstream f("data/data.json");
-    json = nlohmann::json::parse(f);
 
-    std::vector<std::vector<int>> points = { {1, 2, 3}, {1, 2, 3}, {1, 2, 3}};
-    std::vector<std::vector<int>> expected = { {-2, -1, 0}, {1, 2, 3} , {-594, -297, 0} };
+    const std::vector<std::tuple<std::string, int32_t>> testCases = {
+        { "3+4*2/(1-5)^2^3" , 3     },  // Wikipedia's example
+        { "(2*3+3*4)"       , 18    },  // Report from @2kaud.
+        { "(3)+(4)"         , 7     },  // Report from @kayshav.
+        { "(-3)*(-2^3)"     , 24    },  // Unary '-'
+    };
 
-    for (int i = 0; i < json["graph"]["equations"].size(); i++) {
-        for (int j = 0; j < points.size(); j++) {
-            int point = points[i][j];
-            int expect = expected[i][j];
+    for (const auto& testCase : testCases) {
+        const std::string& expr = std::get<0>(testCase);
+        const int32_t expected = std::get<1>(testCase);
 
-            TEST_COMPARE(MathLib::evaluateFunction(json["graph"]["equations"][i], point), expect);
-        }
+        const int32_t result = MathLib::compute(expr);
 
+
+        TEST_COMPARE(result, expected);
     }
+    std::string expr = std::string("x+3");
+    TEST_COMPARE(MathLib::compute(expr, 3), 3);
 }
 
 void TestMath::test_powersAndRoots() {
